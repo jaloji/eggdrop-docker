@@ -24,7 +24,25 @@ RUN apk add --no-cache --virtual egg-deps tcl-dev wget ca-certificates make tar 
     && make install DEST=/home/eggdrop/eggdrop ) \
   && rm -rf eggdrop-1.9.0 \
   && mkdir /home/eggdrop/eggdrop/data \
-  && chown -R eggdrop /home/eggdrop/eggdrop \
+  && chown -R eggdrop /home/eggdrop/eggdrop
+  
+RUN wget https://github.com/flightaware/tclcurl-fa/archive/refs/heads/master.zip \
+  && unzip master.zip \
+  && rm master.zip \
+  && ( cd tclcurl-fa-master \
+  && ./configure \
+  && make \
+  && make install ) \
+  && rm -rf tclcurl-fa-master
+  
+RUN wget http://www.xdobry.de/mysqltcl/mysqltcl-3.052.tar.gz \
+  && tar -zxvf mysqltcl-3.052.tar.gz \
+  && rm mysqltcl-3.052.tar.gz \
+  && ( cd mysqltcl-3.052 \
+  && ./configure \
+  && make \
+  && make install ) \
+  && rm -rf mysqltcl-3.052 \
   && apk del egg-deps
 
 ENV NICK=""
