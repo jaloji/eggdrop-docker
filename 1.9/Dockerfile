@@ -42,7 +42,16 @@ RUN wget http://www.xdobry.de/mysqltcl/mysqltcl-3.052.tar.gz \
   && ./configure \
   && make \
   && make install ) \
-  && rm -rf mysqltcl-3.052 \
+  && rm -rf mysqltcl-3.052
+
+RUN wget https://core.tcl-lang.org/tcllib/uv/tcllib-1.20.tar.gz \
+  && tar -zxvf tcllib-1.20.tar.gz \
+  && rm tcllib-1.20.tar.gz \
+  && ( cd tcllib-1.20 \
+  && ./configure \
+  && make install ) \
+  && rm -rf tcllib-1.20 \
+  && cp -r /usr/local/lib/tcllib1.20/ /usr/lib/tcllib1.20/ \
   && apk del egg-deps
 
 ENV NICK=""
